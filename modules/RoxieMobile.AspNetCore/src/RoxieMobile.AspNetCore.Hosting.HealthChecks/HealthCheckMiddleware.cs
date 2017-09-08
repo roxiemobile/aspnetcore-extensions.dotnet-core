@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
+using RoxieMobile.CSharpCommons.Extensions;
 
 namespace RoxieMobile.AspNetCore.Hosting.HealthChecks
 {
@@ -30,6 +31,15 @@ namespace RoxieMobile.AspNetCore.Hosting.HealthChecks
         {
             // Handle HealthCheck request
             if (IsHealthCheckRequest(context)) {
+
+                // Disable caching of the response
+                context.Response.Headers.Tap(headers => {
+                    headers["Cache-Control"] = new[] {"no-cache, no-store, must-revalidate"};
+                    headers["Expires"] = new[] {"0"};
+                    headers["Pragma"] = new[] {"no-cache"};
+                });
+
+                // Set status code
                 context.Response.StatusCode = StatusCodes.Status204NoContent;
             }
             else {
