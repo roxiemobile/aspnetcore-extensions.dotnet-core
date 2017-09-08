@@ -8,7 +8,15 @@ namespace RoxieMobile.AspNetCore.Hosting.HealthChecks
     {
 // MARK: - Constants
 
-        public HealthCheckMiddleware(RequestDelegate next, string path, int? port = null)
+        public HealthCheckMiddleware(RequestDelegate next, string path)
+        {
+            // Init instance variables
+            _next = next;
+            _path = path;
+            _port = default(int?);
+        }
+
+        public HealthCheckMiddleware(RequestDelegate next, string path, int port)
         {
             // Init instance variables
             _next = next;

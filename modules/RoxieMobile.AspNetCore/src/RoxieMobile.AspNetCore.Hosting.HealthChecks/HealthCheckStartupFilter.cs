@@ -19,7 +19,14 @@ namespace RoxieMobile.AspNetCore.Hosting.HealthChecks
 
         public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next) =>
             app => {
-                app.UseMiddleware<HealthCheckMiddleware>(_path, _port);
+
+                if (_port.HasValue) {
+                    app.UseMiddleware<HealthCheckMiddleware>(_path, _port);
+                }
+                else {
+                    app.UseMiddleware<HealthCheckMiddleware>(_path);
+                }
+
                 next(app);
             };
 
