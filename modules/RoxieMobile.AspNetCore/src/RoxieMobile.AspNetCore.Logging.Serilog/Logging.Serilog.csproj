@@ -9,12 +9,12 @@
     <Copyright>© Roxie Mobile Ltd. All rights reserved.</Copyright>
     <PackageTags>c#;.netcore;commons;logging;serilog</PackageTags>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <RuntimeFrameworkVersion>2.0.0</RuntimeFrameworkVersion>
+    <RuntimeFrameworkVersion>2.0.5</RuntimeFrameworkVersion>
     <PackageId>$(AssemblyName)</PackageId>
     <RootNamespace>$(AssemblyName)</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.2" />
     <PackageReference Include="Microsoft.Extensions.DiagnosticAdapter" Version="2.0.0" />
     <PackageReference Include="RoxieMobile.CSharpCommons.Diagnostics" Version="0.3.0" />
     <PackageReference Include="RoxieMobile.CSharpCommons.Logging" Version="0.3.0" />
