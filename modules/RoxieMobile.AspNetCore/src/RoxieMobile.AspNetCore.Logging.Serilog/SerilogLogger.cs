@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using RoxieMobile.CSharpCommons.Extensions;
 using RoxieMobile.CSharpCommons.Logging;
 using Serilog;
 using Serilog.Events;
 
 namespace RoxieMobile.AspNetCore.Logging.Serilog
 {
+    [SuppressMessage("ReSharper", "ConvertIfStatementToReturnStatement")]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
     public sealed class SerilogLogger : Logger.IContract
     {
 // MARK: - Construction
@@ -25,7 +30,7 @@ namespace RoxieMobile.AspNetCore.Logging.Serilog
         public void V(string tag, string msg)
         {
             if (tag != null && msg != null) {
-                _logger.Verbose(tag.Trim() + (string.IsNullOrWhiteSpace(tag) ? "" : ": ") + msg);
+                _logger.Verbose(tag.Trim() + (tag.IsBlank() ? string.Empty : ": ") + msg);
             }
         }
 

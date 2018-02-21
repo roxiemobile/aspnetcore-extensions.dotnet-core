@@ -101,9 +101,7 @@ namespace RoxieMobile.AspNetCore.Logging.Serilog
                 if (bindingSource.Id == "Services") continue;
 
                 var parameterInfo = parameterDescriptor.ParameterInfo;
-                object value;
-
-                if (!actionParameters.TryGetValue(parameterInfo.Name, out value)) {
+                if (!actionParameters.TryGetValue(parameterInfo.Name, out var value)) {
                     value = GetDefaultValueForParameter(parameterInfo);
                 }
 
