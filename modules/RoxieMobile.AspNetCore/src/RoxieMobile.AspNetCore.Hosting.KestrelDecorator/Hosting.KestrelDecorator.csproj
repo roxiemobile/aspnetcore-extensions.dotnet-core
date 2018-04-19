@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>RoxieMobile.AspNetCore.Hosting.KestrelDecorator</AssemblyName>
+    <VersionPrefix>0.2.1</VersionPrefix>
+    <Title>$(AssemblyName)</Title>
+    <Description>Provides decorator of Kestrel HTTP server for implementing the HMVC pattern in .NET Core applications.</Description>
+    <PackageProjectUrl>https://github.com/roxiemobile/aspnetcore-extensions.dotnet-core</PackageProjectUrl>
+    <Authors>Alexander Bragin</Authors>
+    <Copyright>© Roxie Mobile Ltd. All rights reserved.</Copyright>
+    <PackageTags>c#;.netcore;aspnetcore;monitoring;health-check</PackageTags>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <RuntimeFrameworkVersion>2.0.7</RuntimeFrameworkVersion>
+    <PackageId>$(AssemblyName)</PackageId>
+    <RootNamespace>$(AssemblyName)</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Directory.Build.props" />
+  </ItemGroup>
+</Project>
