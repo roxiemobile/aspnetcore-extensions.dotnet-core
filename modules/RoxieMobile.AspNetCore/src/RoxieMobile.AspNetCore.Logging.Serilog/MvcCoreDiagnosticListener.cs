@@ -97,8 +97,8 @@ namespace RoxieMobile.AspNetCore.Logging.Serilog
                 var parameterDescriptor = parameterDescriptors[index] as ControllerParameterDescriptor;
                 if (parameterDescriptor == null) continue;
 
-                var bindingSource = parameterDescriptor.BindingInfo.BindingSource;
-                if (bindingSource.Id == "Services") continue;
+                var bindingSource = parameterDescriptor.BindingInfo?.BindingSource;
+                if (bindingSource?.Id == "Services") continue;
 
                 var parameterInfo = parameterDescriptor.ParameterInfo;
                 if (!actionParameters.TryGetValue(parameterInfo.Name, out var value)) {
