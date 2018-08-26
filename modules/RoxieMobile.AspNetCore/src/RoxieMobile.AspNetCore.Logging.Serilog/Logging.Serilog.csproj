@@ -7,7 +7,7 @@
     <PackageProjectUrl>https://github.com/roxiemobile/aspnetcore-extensions.dotnet-core</PackageProjectUrl>
     <Authors>Alexander Bragin</Authors>
     <Copyright>© Roxie Mobile Ltd. All rights reserved.</Copyright>
-    <PackageTags>c#;.netcore;commons;logging;serilog</PackageTags>
+    <PackageTags>c#;.netcore;aspnetcore;logging;serilog</PackageTags>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <RuntimeFrameworkVersion>2.1.2</RuntimeFrameworkVersion>
     <PackageId>$(AssemblyName)</PackageId>
