@@ -15,12 +15,14 @@
 
         public static class Application
         {
+            public const string AndroidPackage = "application/vnd.android.package-archive";
             public const string FormUrlEncoded = "application/x-www-form-urlencoded";
             public const string Json = "application/json";
             public const string OctetStream = "application/octet-stream";
             public const string Pdf = "application/pdf";
             public const string Rtf = "application/rtf";
             public const string Soap = "application/soap+xml";
+            public const string Xml = "application/xml";
             public const string Zip = "application/zip";
         }
 
