@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,7 +15,10 @@ using Microsoft.Extensions.Options;
 
 namespace RoxieMobile.AspNetCore.Hosting.KestrelDecorator
 {
-    public class KestrelServerDecorator : IServer, IApplicationHttpClientFactory
+    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+    public sealed class KestrelServerDecorator :
+        IServer,
+        IApplicationHttpClientFactory
     {
 // MARK: - Construction
 
@@ -62,7 +66,7 @@ namespace RoxieMobile.AspNetCore.Hosting.KestrelDecorator
             IHttpApplication<TContext> application,
             CancellationToken cancellationToken)
         {
-            _application = new ApplicationWrapper<HostingApplication.Context>(
+            _application = new ApplicationProxy<HostingApplication.Context>(
                 (IHttpApplication<HostingApplication.Context>) application, () => {
                     if (_disposed) {
                         throw new ObjectDisposedException(GetType().FullName);
@@ -74,26 +78,24 @@ namespace RoxieMobile.AspNetCore.Hosting.KestrelDecorator
             await _server.StartAsync(_application, cancellationToken);
         }
 
-        public async Task StopAsync(CancellationToken cancellationToken)
+        public async Task StopAsync(
+            CancellationToken cancellationToken)
         {
             await _server.StopAsync(cancellationToken);
         }
 
-        public HttpClient CreateClient(Uri baseAddress)
-        {
-            return new HttpClient(_httpClientHandler, disposeHandler: false) {
-                BaseAddress = baseAddress
-            };
-        }
+        public HttpClient CreateClient(Uri baseAddress) =>
+            new HttpClient(_httpClientHandler, disposeHandler: false) { BaseAddress = baseAddress };
 
 // MARK: - Inner Types
 
-        private class ApplicationWrapper<TContext> : IHttpApplication<TContext>
+        private class ApplicationProxy<TContext> : IHttpApplication<TContext>
         {
-            public ApplicationWrapper(IHttpApplication<TContext> application, Action preProcessRequestAsync)
+            public ApplicationProxy(IHttpApplication<TContext> application, Action preProcessRequestAsync)
             {
-                _application = application;
-                _preProcessRequestAsync = preProcessRequestAsync;
+                // Init instance
+                _application = application ?? throw new ArgumentNullException(nameof(application));
+                _preProcessRequestAsync = preProcessRequestAsync ?? throw new ArgumentNullException(nameof(preProcessRequestAsync));
             }
 
             public TContext CreateContext(IFeatureCollection contextFeatures)

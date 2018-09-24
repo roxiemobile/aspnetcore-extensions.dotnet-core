@@ -1,20 +1,21 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
-using Microsoft.AspNetCore.Server.Kestrel.Core.Internal;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace RoxieMobile.AspNetCore.Hosting.KestrelDecorator
 {
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public static class WebHostBuilderKestrelExtensions
     {
         /// <summary>
-        /// Specify Kestrel as the server to be used by the web host.
+        /// Specify KestrelServerDecorator as the server to be used by the web host.
         /// </summary>
         /// <param name="hostBuilder">
-        /// The Microsoft.AspNetCore.Hosting.IWebHostBuilder to configure.
+        /// The <see cref="IWebHostBuilder"/> to configure.
         /// </param>
         /// <returns>
         /// The Microsoft.AspNetCore.Hosting.IWebHostBuilder.
@@ -22,20 +23,22 @@ namespace RoxieMobile.AspNetCore.Hosting.KestrelDecorator
         public static IWebHostBuilder UseKestrelDecorator(
             this IWebHostBuilder hostBuilder)
         {
-            hostBuilder.UseLibuv();
-
-            return hostBuilder.ConfigureServices(services => {
-                services.AddTransient<IConfigureOptions<KestrelServerOptions>, KestrelServerOptionsSetup>();
-                services.AddSingleton<IServer, KestrelServerDecorator>();
-                services.AddTransient(provider => provider.GetService<IServer>() as IApplicationHttpClientFactory);
-            });
+            return hostBuilder
+                .UseKestrel()
+                .ConfigureServices(services => {
+                    // Remove KestrelServer instance from services
+                    services.RemoveAll<IServer>();
+                    // Add KestrelServerDecorator instance as replacement of KestrelServer instance
+                    services.AddSingleton<IServer, KestrelServerDecorator>();
+                    services.AddSingleton(provider => provider.GetService<IServer>() as IApplicationHttpClientFactory);
+                });
         }
 
         /// <summary>
-        /// Specify Kestrel as the server to be used by the web host.
+        /// Specify KestrelServerDecorator as the server to be used by the web host.
         /// </summary>
         /// <param name="hostBuilder">
-        /// The Microsoft.AspNetCore.Hosting.IWebHostBuilder to configure.
+        /// The <see cref="IWebHostBuilder"/> to configure.
         /// </param>
         /// <param name="options">
         /// A callback to configure Kestrel options.
@@ -47,7 +50,9 @@ namespace RoxieMobile.AspNetCore.Hosting.KestrelDecorator
             this IWebHostBuilder hostBuilder,
             Action<KestrelServerOptions> options)
         {
-            return hostBuilder.UseKestrelDecorator().ConfigureServices(services => services.Configure(options));
+            return hostBuilder
+                .UseKestrelDecorator()
+                .ConfigureServices(services => services.Configure(options));
         }
     }
 }
