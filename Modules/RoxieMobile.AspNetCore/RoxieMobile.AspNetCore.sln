@@ -2,13 +2,13 @@
 # Visual Studio 15
 VisualStudioVersion = 15.0.26114.2
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hosting.HealthChecks", "src\RoxieMobile.AspNetCore.Hosting.HealthChecks\Hosting.HealthChecks.csproj", "{02EE81B7-516A-4E8D-9284-A7285E6BC7B3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hosting.HealthChecks", "src\Hosting.HealthChecks\Hosting.HealthChecks.csproj", "{02EE81B7-516A-4E8D-9284-A7285E6BC7B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hosting.KestrelDecorator", "src\RoxieMobile.AspNetCore.Hosting.KestrelDecorator\Hosting.KestrelDecorator.csproj", "{82DE8DD4-01FC-45ED-8A17-4ED93E8D107C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hosting.KestrelDecorator", "src\Hosting.KestrelDecorator\Hosting.KestrelDecorator.csproj", "{82DE8DD4-01FC-45ED-8A17-4ED93E8D107C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging.Serilog", "src\RoxieMobile.AspNetCore.Logging.Serilog\Logging.Serilog.csproj", "{E3980F9E-FC21-4851-B9BB-BCE5DD1A22E7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging.Serilog", "src\Logging.Serilog\Logging.Serilog.csproj", "{E3980F9E-FC21-4851-B9BB-BCE5DD1A22E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net.Http", "src\RoxieMobile.AspNetCore.Net.Http\Net.Http.csproj", "{4CCD5EC6-7C65-4FCD-9A34-05605A65C93B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net.Http", "src\Net.Http\Net.Http.csproj", "{4CCD5EC6-7C65-4FCD-9A34-05605A65C93B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
