@@ -1,6 +1,6 @@
 ﻿namespace RoxieMobile.AspNetCore.Net.Http.Infrastructure
 {
-    public class UserAgentComponent
+    public sealed class UserAgentComponent
     {
         public string Product { get; set; }
 

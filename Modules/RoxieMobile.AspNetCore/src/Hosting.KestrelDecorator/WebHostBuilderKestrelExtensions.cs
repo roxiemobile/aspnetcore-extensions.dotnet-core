@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace RoxieMobile.AspNetCore.Hosting.KestrelDecorator
 {
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public static class WebHostBuilderKestrelExtensions
     {
         /// <summary>

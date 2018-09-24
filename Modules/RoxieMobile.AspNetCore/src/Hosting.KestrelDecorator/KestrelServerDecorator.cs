@@ -15,7 +15,10 @@ using Microsoft.Extensions.Options;
 
 namespace RoxieMobile.AspNetCore.Hosting.KestrelDecorator
 {
+    [SuppressMessage("ReSharper", "ArgumentsStyleLiteral")]
     [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+    [SuppressMessage("ReSharper", "RedundantAssignment")]
+    [SuppressMessage("ReSharper", "RedundantDefaultMemberInitializer")]
     public sealed class KestrelServerDecorator :
         IServer,
         IApplicationHttpClientFactory

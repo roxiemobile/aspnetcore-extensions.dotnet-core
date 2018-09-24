@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
+using RoxieMobile.AspNetCore.Net.Http.Headers;
 
 namespace RoxieMobile.AspNetCore.Net.Http.Infrastructure
 {
-    public class UserAgentTools
+    public static class UserAgentTools
     {
         public static UserAgent DetectUserAgent(HttpContext context, string product)
         {
@@ -44,7 +45,7 @@ namespace RoxieMobile.AspNetCore.Net.Http.Infrastructure
                     if (component == null) continue;
                     yield return ToUserAgent(component);
                 }
-            }            
+            }
         }
 
         public static UserAgent ToUserAgent(UserAgentComponent component)
@@ -74,7 +75,7 @@ namespace RoxieMobile.AspNetCore.Net.Http.Infrastructure
             }
             return userAgent;
         }
-        
+
         public static IEnumerable<UserAgentComponent> ParseUserAgentString(string userAgentString)
         {
             var userAgentComponents = new List<UserAgentComponent>();
@@ -187,13 +188,13 @@ namespace RoxieMobile.AspNetCore.Net.Http.Infrastructure
         {
             return comment.Split(';').Select(s => s.Trim()).ToArray();
         }
-        
+
 // MARK: - Constants
 
         private static readonly string[] UserAgentHeaders = {
-            "X-Device-User-Agent",
-            "X-Original-User-Agent",
-            "User-Agent"
+            HttpHeaderNames.XDeviceUserAgent,
+            HttpHeaderNames.XOriginalUserAgent,
+            HttpHeaderNames.UserAgent
         };
     }
 }

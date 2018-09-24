@@ -3,25 +3,13 @@ using System.Collections.Generic;
 
 namespace RoxieMobile.AspNetCore.Net.Http.Infrastructure
 {
-    public class UserAgent
+    public sealed class UserAgent
     {
         private IDictionary<string, object> properties;
 
+        public static UserAgent Unknown =>
+            new UserAgent { Product = "unknown", Platform = "unknown", Version = "0.0", };
 
-        /// <summary>
-        /// The unknown.
-        /// </summary>
-        /// <returns>
-        /// The <see cref="UserAgent"/>.
-        /// </returns>
-        public static UserAgent Unknown
-        {
-            get
-            {
-                return new UserAgent { Product = "unknown", Platform = "unknown", Version = "0.0", };
-            }
-        }
-        
         public string Product { get; set; }
 
         public string Version { get; set; }
@@ -30,31 +18,20 @@ namespace RoxieMobile.AspNetCore.Net.Http.Infrastructure
 
         public string PlatformVersion { get; set; }
 
-        public IDictionary<string, object> Properties
-        {
-            get
-            {
-                return this.properties
-                       ?? (this.properties = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase));
-            }
-        }
+        public IDictionary<string, object> Properties =>
+            this.properties ?? (this.properties = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase));
 
         public object this[string key]
         {
-            get
-            {
-                object result;
-                this.Properties.TryGetValue(key, out result);
+            get {
+                this.Properties.TryGetValue(key, out var result);
                 return result;
             }
 
-            set
-            {
-                if (this.Properties.ContainsKey(key))
-                {
+            set {
+                if (this.Properties.ContainsKey(key)) {
                     this.Properties.Remove(key);
                 }
-
                 this.Properties.Add(key, value);
             }
         }

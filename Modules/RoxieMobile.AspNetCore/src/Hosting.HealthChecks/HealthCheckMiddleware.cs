@@ -1,11 +1,14 @@
-﻿using System.Threading.Tasks;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Primitives;
+using RoxieMobile.AspNetCore.Net.Http.Headers;
 using RoxieMobile.CSharpCommons.Extensions;
 
 namespace RoxieMobile.AspNetCore.Hosting.HealthChecks
 {
+    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     public sealed class HealthCheckMiddleware
     {
 // MARK: - Constants
@@ -35,9 +38,9 @@ namespace RoxieMobile.AspNetCore.Hosting.HealthChecks
 
                 // Disable caching of the response
                 context.Response.Headers.Tap(headers => {
-                    headers["Cache-Control"] = new StringValues("no-cache, no-store, must-revalidate");
-                    headers["Expires"] = new StringValues("0");
-                    headers["Pragma"] = new StringValues("no-cache");
+                    headers[HttpHeaderNames.CacheControl] = new StringValues("no-cache, no-store, must-revalidate");
+                    headers[HttpHeaderNames.Expires] = new StringValues("0");
+                    headers[HttpHeaderNames.Pragma] = new StringValues("no-cache");
                 });
 
                 // Set status code
