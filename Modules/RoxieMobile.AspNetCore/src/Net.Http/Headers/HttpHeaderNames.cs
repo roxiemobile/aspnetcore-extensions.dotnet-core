@@ -12,7 +12,7 @@
         public const string Expires = "Expires";
         public const string Pragma = "Pragma";
         public const string Server = "Server";
-        public const string UserAgent = "UserAgent";
+        public const string UserAgent = "User-Agent";
         public const string XDeviceUserAgent = "X-Device-User-Agent";
         public const string XOriginalUserAgent = "X-Original-User-Agent";
         public const string XPoweredBy = "X-Powered-By";
