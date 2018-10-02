@@ -19,7 +19,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.Primitives" Version="2.1.1" />
-    <PackageReference Include="RoxieMobile.CSharpCommons.Diagnostics" Version="0.5.3" />
+    <PackageReference Include="RoxieMobile.CSharpCommons.Diagnostics" Version="0.6.0" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Directory.Build.props" />
