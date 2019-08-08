@@ -1,4 +1,4 @@
-using NetEscapades.AspNetCore.SecurityHeaders;
+using Microsoft.AspNetCore.Builder;
 
 namespace RoxieMobile.AspNetCore.Net.Http.Headers
 {

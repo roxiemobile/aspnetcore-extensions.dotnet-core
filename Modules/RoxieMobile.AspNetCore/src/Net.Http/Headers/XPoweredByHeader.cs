@@ -1,5 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
+using NetEscapades.AspNetCore.SecurityHeaders.Headers;
 using NetEscapades.AspNetCore.SecurityHeaders.Infrastructure;
 using RoxieMobile.CSharpCommons.Extensions;
 
@@ -8,13 +8,12 @@ namespace RoxieMobile.AspNetCore.Net.Http.Headers
     /// <summary>
     /// Header value for X-Powered-By header
     /// </summary>
-    public sealed class XPoweredByHeader : HeaderPolicyBase
+    public sealed class XPoweredByHeader : CustomHeader
     {
         /// <inheritdoc />
-        public XPoweredByHeader(string value) : base(value)
-        {
-            this.Value = value;
-        }
+        public XPoweredByHeader(string value) :
+            base(HttpHeaderNames.XPoweredBy, value)
+        {}
 
         /// <inheritdoc />
         public override string Header { get; } = HttpHeaderNames.XPoweredBy;
@@ -40,14 +39,14 @@ namespace RoxieMobile.AspNetCore.Net.Http.Headers
             EvaluateRequest(context, result);
         }
 
-        [SuppressMessage("ReSharper", "UnusedParameter.Local")]
         private void EvaluateRequest(HttpContext context, CustomHeadersResult result)
         {
-            if (this.Value.IsEmpty()) {
+            var value = GetValue(context);
+            if (value.IsEmpty()) {
                 result.RemoveHeaders.Add(this.Header);
             }
             else {
-                result.SetHeaders[this.Header] = this.Value;
+                result.SetHeaders[this.Header] = value;
             }
         }
     }
