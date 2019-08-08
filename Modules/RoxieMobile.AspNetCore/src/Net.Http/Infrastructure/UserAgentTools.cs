@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Net.Http.Headers;
 using RoxieMobile.AspNetCore.Net.Http.Headers;
 
 namespace RoxieMobile.AspNetCore.Net.Http.Infrastructure
@@ -194,7 +195,7 @@ namespace RoxieMobile.AspNetCore.Net.Http.Infrastructure
         private static readonly string[] UserAgentHeaders = {
             HttpHeaderNames.XDeviceUserAgent,
             HttpHeaderNames.XOriginalUserAgent,
-            HttpHeaderNames.UserAgent
+            HeaderNames.UserAgent
         };
     }
 }

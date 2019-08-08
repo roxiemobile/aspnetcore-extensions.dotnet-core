@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Primitives;
-using RoxieMobile.AspNetCore.Net.Http.Headers;
+using Microsoft.Net.Http.Headers;
 using RoxieMobile.CSharpCommons.Extensions;
 
 namespace RoxieMobile.AspNetCore.Hosting.HealthChecks
@@ -38,9 +38,9 @@ namespace RoxieMobile.AspNetCore.Hosting.HealthChecks
 
                 // Disable caching of the response
                 context.Response.Headers.Tap(headers => {
-                    headers[HttpHeaderNames.CacheControl] = new StringValues("no-cache, no-store, must-revalidate");
-                    headers[HttpHeaderNames.Expires] = new StringValues("0");
-                    headers[HttpHeaderNames.Pragma] = new StringValues("no-cache");
+                    headers[HeaderNames.CacheControl] = new StringValues("no-cache, no-store, must-revalidate");
+                    headers[HeaderNames.Expires] = new StringValues("0");
+                    headers[HeaderNames.Pragma] = new StringValues("no-cache");
                 });
 
                 // Set status code
