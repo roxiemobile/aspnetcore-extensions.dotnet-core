@@ -16,6 +16,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.2.0" />
+    <PackageReference Include="RoxieMobile.CSharpCommons.Diagnostics" Version="0.7.0" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Directory.Build.props" />
