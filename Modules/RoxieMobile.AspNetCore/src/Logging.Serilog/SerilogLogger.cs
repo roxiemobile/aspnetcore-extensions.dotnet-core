@@ -16,7 +16,7 @@ namespace RoxieMobile.AspNetCore.Logging.Serilog
 
         public SerilogLogger(ILogger logger)
         {
-            // Init instance variables
+            // Init instance
             _logger = logger;
             this.MinimumLogLevel = FindMinimumLogLevel(logger);
         }
@@ -30,35 +30,35 @@ namespace RoxieMobile.AspNetCore.Logging.Serilog
         public void V(string tag, string msg)
         {
             if (tag != null && msg != null) {
-                _logger.Verbose(tag.Trim() + (tag.IsBlank() ? string.Empty : ": ") + msg);
+                _logger.Verbose("{Message:l}", tag.Trim() + (tag.IsBlank() ? string.Empty : ": ") + msg);
             }
         }
 
         public void D(string tag, string msg)
         {
             if (tag != null && msg != null) {
-                _logger.Debug(msg);
+                _logger.Debug("{Message:l}", msg);
             }
         }
 
         public void I(string tag, string msg)
         {
             if (tag != null && msg != null) {
-                _logger.Information(msg);
+                _logger.Information("{Message:l}", msg);
             }
         }
 
         public void W(string tag, string msg)
         {
             if (tag != null && msg != null) {
-                _logger.Warning(msg);
+                _logger.Warning("{Message:l}", msg);
             }
         }
 
         public void W(string tag, string msg, Exception exc)
         {
             if (tag != null && msg != null) {
-                _logger.Warning(exc, msg);
+                _logger.Warning(exc, "{Message:l}", msg);
             }
         }
 
@@ -72,21 +72,21 @@ namespace RoxieMobile.AspNetCore.Logging.Serilog
         public void E(string tag, string msg)
         {
             if (tag != null && msg != null) {
-                _logger.Error(msg);
+                _logger.Error("{Message:l}", msg);
             }
         }
 
         public void E(string tag, string msg, Exception exc)
         {
             if (tag != null && msg != null) {
-                _logger.Error(exc, msg);
+                _logger.Error(exc, "{Message:l}", msg);
             }
         }
 
         public void E(string tag, Exception exc)
         {
             if (tag != null) {
-                _logger.Debug(exc, "");
+                _logger.Error(exc, "");
             }
         }
 
