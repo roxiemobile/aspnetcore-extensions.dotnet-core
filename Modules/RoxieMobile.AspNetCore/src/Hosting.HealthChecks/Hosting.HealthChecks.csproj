@@ -17,9 +17,9 @@
     <ProjectReference Include="../Net.Http/Net.Http.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
     <PackageReference Include="Microsoft.Extensions.Primitives" Version="2.2.0" />
-    <PackageReference Include="RoxieMobile.CSharpCommons.Diagnostics" Version="0.6.0" />
+    <PackageReference Include="RoxieMobile.CSharpCommons.Diagnostics" Version="0.7.0" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Directory.Build.props" />
