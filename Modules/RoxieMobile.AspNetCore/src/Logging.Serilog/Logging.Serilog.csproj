@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>RoxieMobile.AspNetCore.Logging.Serilog</AssemblyName>
-    <VersionPrefix>0.5.0</VersionPrefix>
+    <VersionPrefix>0.6.0</VersionPrefix>
     <Title>$(AssemblyName)</Title>
     <Description>Provides Serilog logging integration for .NET Core projects.</Description>
     <PackageProjectUrl>https://github.com/roxiemobile/aspnetcore-extensions.dotnet-core</PackageProjectUrl>

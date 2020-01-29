@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>RoxieMobile.AspNetCore.Net.Http</AssemblyName>
-    <VersionPrefix>0.5.0</VersionPrefix>
+    <VersionPrefix>0.6.0</VersionPrefix>
     <Title>$(AssemblyName)</Title>
     <Description>Provides a programming interface for HTTP applications, including components for parsing HTTP headers.</Description>
     <PackageProjectUrl>https://github.com/roxiemobile/aspnetcore-extensions.dotnet-core</PackageProjectUrl>

@@ -9,7 +9,6 @@ PACKAGE ||= RoxieMobile::Package.new(
   name: 'AspNetCore',
   base_dir: base_dir,
   projects_sources: [
-    'Hosting.HealthChecks',
     'Hosting.KestrelDecorator',
     'Logging.Serilog',
     'Net.Http'
