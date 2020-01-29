@@ -8,18 +8,22 @@
     <Authors>Alexander Bragin</Authors>
     <Copyright>© Roxie Mobile Ltd. All rights reserved.</Copyright>
     <PackageTags>c#;.netcore;aspnetcore;logging;serilog</PackageTags>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
-    <RuntimeFrameworkVersion>2.2.7</RuntimeFrameworkVersion>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <PackageId>$(AssemblyName)</PackageId>
     <RootNamespace>$(AssemblyName)</RootNamespace>
+    <LangVersion>8</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.DiagnosticAdapter" Version="2.2.0" />
-    <PackageReference Include="RoxieMobile.CSharpCommons.Diagnostics" Version="0.7.0" />
-    <PackageReference Include="RoxieMobile.CSharpCommons.Logging" Version="0.7.0" />
-    <PackageReference Include="Serilog.Sinks.Async" Version="1.4.0" />
-    <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.1" />
+    <PackageReference Include="Microsoft.Extensions.DiagnosticAdapter" Version="3.1.1" />
+    <PackageReference Include="RoxieMobile.CSharpCommons.Diagnostics" Version="0.8.1" />
+    <PackageReference Include="RoxieMobile.CSharpCommons.Logging" Version="0.8.1" />
+    <PackageReference Include="Serilog" Version="2.9.0" />
+    <PackageReference Include="Serilog.Sinks.TextWriter" Version="2.1.0" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Directory.Build.props" />
