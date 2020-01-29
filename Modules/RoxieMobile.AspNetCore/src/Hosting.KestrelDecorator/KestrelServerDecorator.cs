@@ -1,36 +1,35 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting.Internal;
+using Microsoft.AspNetCore.Connections;
 using Microsoft.AspNetCore.Hosting.Server;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
-using Microsoft.AspNetCore.Server.Kestrel.Transport.Abstractions.Internal;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using RoxieMobile.AspNetCore.Hosting.KestrelDecorator.Resources;
+
+// KestrelServer.cs
+// @link https://github.com/dotnet/aspnetcore/blob/v3.1.1/src/Servers/Kestrel/Core/src/KestrelServer.cs
+
+// TestServer.cs
+// @link https://github.com/dotnet/aspnetcore/blob/v3.1.1/src/Hosting/TestHost/src/TestServer.cs
 
 namespace RoxieMobile.AspNetCore.Hosting.KestrelDecorator
 {
-    [SuppressMessage("ReSharper", "ArgumentsStyleLiteral")]
-    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
-    [SuppressMessage("ReSharper", "RedundantAssignment")]
-    [SuppressMessage("ReSharper", "RedundantDefaultMemberInitializer")]
-    public sealed class KestrelServerDecorator :
-        IServer,
-        IApplicationHttpClientFactory
+    public sealed class KestrelServerDecorator : IServer, ILoopbackHttpClientFactory
     {
 // MARK: - Construction
 
-        public KestrelServerDecorator(
-            IOptions<KestrelServerOptions> options,
-            ITransportFactory transportFactory,
-            ILoggerFactory loggerFactory)
+        public KestrelServerDecorator(IOptions<KestrelServerOptions> options, IConnectionListenerFactory transportFactory, ILoggerFactory loggerFactory)
         {
-            _server = new KestrelServer(options, transportFactory, loggerFactory);
+            // Init instance
+            _kestrelServer = new KestrelServer(options, transportFactory, loggerFactory);
+            _testServer = new TestServer(new ServiceCollection().BuildServiceProvider(), this.Features);
         }
 
         ~KestrelServerDecorator()
@@ -40,97 +39,128 @@ namespace RoxieMobile.AspNetCore.Hosting.KestrelDecorator
 
         public void Dispose()
         {
-            IDisposable server = null;
-            IDisposable httpClientHandler = null;
-
-            lock (_syncLock) {
+            var disposables = new List<IDisposable?>();
+            ExecSafe(() => {
 
                 _disposed = true;
 
-                // Release resources
-                server = _server;
-                _server = null;
+                // Collect disposable objects
+                disposables.Add(_kestrelServer);
+                _kestrelServer = null;
 
-                httpClientHandler = _httpClientHandler;
+                disposables.Add(_testServer);
+                _testServer = null;
+
+                disposables.Add(_httpClientHandler);
                 _httpClientHandler = null;
-            }
+            });
 
-            server?.Dispose();
-            httpClientHandler?.Dispose();
+            // Dispose collected objects
+            disposables.ForEach(o => o?.Dispose());
         }
 
 // MARK: - Properties
 
-        public IFeatureCollection Features => _server.Features;
+        public IFeatureCollection Features =>
+            ExecSafeAndReturn(() => _kestrelServer?.Features ?? new FeatureCollection());
 
 // MARK: - Methods
 
-        public async Task StartAsync<TContext>(
-            IHttpApplication<TContext> application,
-            CancellationToken cancellationToken)
+        public async Task StartAsync<TContext>(IHttpApplication<TContext> application, CancellationToken cancellationToken)
         {
-            _application = new ApplicationProxy<HostingApplication.Context>(
-                (IHttpApplication<HostingApplication.Context>) application, () => {
-                    if (_disposed) {
-                        throw new ObjectDisposedException(GetType().FullName);
-                    }
-                });
+            await ExecSafeAsync(async () => {
 
-            _httpClientHandler = new ClientHandler(PathString.Empty, _application);
+                if (_kestrelServer != null) {
+                    await _kestrelServer.StartAsync(application, cancellationToken);
+                }
 
-            await _server.StartAsync(_application, cancellationToken);
+                if (_testServer is IServer server) {
+                    await server.StartAsync(application, cancellationToken);
+
+                    // Create shared loopback HttpMessageHandler
+                    _testServer.BaseAddress = null;
+                    _httpClientHandler = _testServer.CreateHandler();
+                }
+            });
         }
 
-        public async Task StopAsync(
-            CancellationToken cancellationToken)
+        public async Task StopAsync(CancellationToken cancellationToken)
         {
-            await _server.StopAsync(cancellationToken);
+            await ExecSafeAsync(async () => {
+
+                if (_testServer is IServer server) {
+                    await server.StopAsync(cancellationToken);
+                }
+
+                if (_kestrelServer != null) {
+                    await _kestrelServer.StopAsync(cancellationToken);
+                }
+            });
         }
 
-        public HttpClient CreateClient(Uri baseAddress) =>
-            new HttpClient(_httpClientHandler, disposeHandler: false) { BaseAddress = baseAddress };
-
-// MARK: - Inner Types
-
-        private class ApplicationProxy<TContext> : IHttpApplication<TContext>
+        public HttpClient CreateClient(Uri? baseAddress)
         {
-            public ApplicationProxy(IHttpApplication<TContext> application, Action preProcessRequestAsync)
-            {
-                // Init instance
-                _application = application ?? throw new ArgumentNullException(nameof(application));
-                _preProcessRequestAsync = preProcessRequestAsync ?? throw new ArgumentNullException(nameof(preProcessRequestAsync));
-            }
+            var handler = ExecSafeAndReturn(() => _httpClientHandler ?? throw new InvalidOperationException(Messages.ServerIsNotStarted));
 
-            public TContext CreateContext(IFeatureCollection contextFeatures)
-            {
-                return _application.CreateContext(contextFeatures);
-            }
+            return new HttpClient(handler, disposeHandler: false) {
+                BaseAddress = baseAddress
+            };
+        }
 
-            public void DisposeContext(TContext context, Exception exception)
-            {
-                _application.DisposeContext(context, exception);
-            }
+// MARK: - Private Methods
 
-            public Task ProcessRequestAsync(TContext context)
-            {
-                _preProcessRequestAsync();
-                return _application.ProcessRequestAsync(context);
+        private void ExecSafe(Action action)
+        {
+            _syncMutex.Wait();
+            try {
+                if (_disposed) {
+                    throw new ObjectDisposedException(GetType().FullName);
+                }
+                action();
             }
+            finally {
+                _syncMutex.Release();
+            }
+        }
 
-            private readonly IHttpApplication<TContext> _application;
-            private readonly Action _preProcessRequestAsync;
+        private async Task ExecSafeAsync(Func<Task> action)
+        {
+            _syncMutex.Wait();
+            try {
+                if (_disposed) {
+                    throw new ObjectDisposedException(GetType().FullName);
+                }
+                await action();
+            }
+            finally {
+                _syncMutex.Release();
+            }
+        }
+
+        private TResult ExecSafeAndReturn<TResult>(Func<TResult> action)
+        {
+            _syncMutex.Wait();
+            try {
+                if (_disposed) {
+                    throw new ObjectDisposedException(GetType().FullName);
+                }
+                return action();
+            }
+            finally {
+                _syncMutex.Release();
+            }
         }
 
 // MARK: - Variables
 
-        private IServer _server;
+        private readonly SemaphoreSlim _syncMutex = new SemaphoreSlim(1, 1);
 
-        private IHttpApplication<HostingApplication.Context> _application;
+        private IServer? _kestrelServer;
 
-        private HttpMessageHandler _httpClientHandler;
+        private TestServer? _testServer;
 
-        private bool _disposed = false;
+        private HttpMessageHandler? _httpClientHandler;
 
-        private static readonly object _syncLock = new object();
+        private bool _disposed;
     }
 }
