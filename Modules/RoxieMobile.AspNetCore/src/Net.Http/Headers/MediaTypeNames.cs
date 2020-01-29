@@ -1,7 +1,7 @@
 ﻿namespace RoxieMobile.AspNetCore.Net.Http.Headers
 {
-    // GitHub.com — dotnet/corefx
-    // @link https://github.com/dotnet/corefx/blob/master/src/System.Net.Mail/src/System/Net/Mime/MediaTypeNames.cs
+    // GitHub.com — dotnet/runtime
+    // @link https://github.com/dotnet/runtime/blob/master/src/libraries/System.Net.Mail/src/System/Net/Mime/MediaTypeNames.cs
 
     public static class MediaTypeNames
     {

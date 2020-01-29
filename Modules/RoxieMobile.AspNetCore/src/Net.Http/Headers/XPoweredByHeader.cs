@@ -22,22 +22,16 @@ namespace RoxieMobile.AspNetCore.Net.Http.Headers
         /// Removes the X-Powered-By header from the response
         /// </summary>
         /// <returns></returns>
-        public static XPoweredByHeader Remove()
-        {
-            return new XPoweredByHeader(null);
-        }
+        public static XPoweredByHeader Remove() =>
+            new XPoweredByHeader(string.Empty);
 
         /// <inheritdoc />
-        protected override void EvaluateHttpRequest(HttpContext context, CustomHeadersResult result)
-        {
+        protected override void EvaluateHttpRequest(HttpContext context, CustomHeadersResult result) =>
             EvaluateRequest(context, result);
-        }
 
         /// <inheritdoc />
-        protected override void EvaluateHttpsRequest(HttpContext context, CustomHeadersResult result)
-        {
+        protected override void EvaluateHttpsRequest(HttpContext context, CustomHeadersResult result) =>
             EvaluateRequest(context, result);
-        }
 
         private void EvaluateRequest(HttpContext context, CustomHeadersResult result)
         {

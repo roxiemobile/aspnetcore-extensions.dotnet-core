@@ -20,7 +20,7 @@ namespace RoxieMobile.AspNetCore.Net.Http.Infrastructure
 
                 var userAgentComponents = ParseUserAgentString(context.Request.Headers[headerName]);
 
-                var component = userAgentComponents.FirstOrDefault(c => c.Product.Equals(product, StringComparison.OrdinalIgnoreCase));
+                var component = userAgentComponents.FirstOrDefault(c => c.Product?.Equals(product, StringComparison.OrdinalIgnoreCase) ?? false);
                 if (component != null)
                 {
                     return ToUserAgent(component);
@@ -80,7 +80,7 @@ namespace RoxieMobile.AspNetCore.Net.Http.Infrastructure
         public static IEnumerable<UserAgentComponent> ParseUserAgentString(string userAgentString)
         {
             var userAgentComponents = new List<UserAgentComponent>();
-            UserAgentComponent userAgentComponent = null;
+            UserAgentComponent? userAgentComponent = null;
 
             userAgentString = userAgentString.Trim();
 

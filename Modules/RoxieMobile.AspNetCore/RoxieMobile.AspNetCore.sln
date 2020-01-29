@@ -2,8 +2,6 @@
 # Visual Studio 15
 VisualStudioVersion = 15.0.26114.2
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hosting.HealthChecks", "src\Hosting.HealthChecks\Hosting.HealthChecks.csproj", "{02EE81B7-516A-4E8D-9284-A7285E6BC7B3}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hosting.KestrelDecorator", "src\Hosting.KestrelDecorator\Hosting.KestrelDecorator.csproj", "{82DE8DD4-01FC-45ED-8A17-4ED93E8D107C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging.Serilog", "src\Logging.Serilog\Logging.Serilog.csproj", "{E3980F9E-FC21-4851-B9BB-BCE5DD1A22E7}"
@@ -16,10 +14,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{02EE81B7-516A-4E8D-9284-A7285E6BC7B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{02EE81B7-516A-4E8D-9284-A7285E6BC7B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{02EE81B7-516A-4E8D-9284-A7285E6BC7B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{02EE81B7-516A-4E8D-9284-A7285E6BC7B3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{82DE8DD4-01FC-45ED-8A17-4ED93E8D107C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{82DE8DD4-01FC-45ED-8A17-4ED93E8D107C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82DE8DD4-01FC-45ED-8A17-4ED93E8D107C}.Release|Any CPU.ActiveCfg = Release|Any CPU
