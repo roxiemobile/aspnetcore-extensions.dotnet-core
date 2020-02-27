@@ -18,10 +18,10 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.1" />
-    <PackageReference Include="Microsoft.Extensions.DiagnosticAdapter" Version="3.1.1" />
-    <PackageReference Include="RoxieMobile.CSharpCommons.Diagnostics" Version="0.8.1" />
-    <PackageReference Include="RoxieMobile.CSharpCommons.Logging" Version="0.8.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.2" />
+    <PackageReference Include="Microsoft.Extensions.DiagnosticAdapter" Version="3.1.2" />
+    <PackageReference Include="RoxieMobile.CSharpCommons.Diagnostics" Version="0.8.2" />
+    <PackageReference Include="RoxieMobile.CSharpCommons.Logging" Version="0.8.2" />
     <PackageReference Include="Serilog" Version="2.9.0" />
     <PackageReference Include="Serilog.Sinks.TextWriter" Version="2.1.0" />
   </ItemGroup>

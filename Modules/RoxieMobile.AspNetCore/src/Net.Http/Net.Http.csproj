@@ -16,7 +16,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="NetEscapades.AspNetCore.SecurityHeaders" Version="0.11.0" />
-    <PackageReference Include="RoxieMobile.CSharpCommons.Extensions" Version="0.8.1" />
+    <PackageReference Include="RoxieMobile.CSharpCommons.Extensions" Version="0.8.2" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Directory.Build.props" />
