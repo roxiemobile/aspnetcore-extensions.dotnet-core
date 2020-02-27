@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>RoxieMobile.AspNetCore.Hosting.KestrelDecorator</AssemblyName>
-    <VersionPrefix>0.6.0</VersionPrefix>
+    <VersionPrefix>0.6.1</VersionPrefix>
     <Title>$(AssemblyName)</Title>
     <Description>Provides decorator of Kestrel HTTP server for implementing the HMVC pattern in .NET Core applications.</Description>
     <PackageProjectUrl>https://github.com/roxiemobile/aspnetcore-extensions.dotnet-core</PackageProjectUrl>
